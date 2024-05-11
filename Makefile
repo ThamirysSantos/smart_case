@@ -12,3 +12,15 @@ optimize:
 	docker-compose exec app php artisan route:clear
 	docker-compose exec app php artisan config:cache
 	docker-compose exec app php artisan  config:clear
+
+migrate-rollback:
+	docker-compose exec app php artisan migrate:rollback
+
+migrate:
+	docker-compose exec app php artisan migrate
+
+setup:
+	make up
+	make generate-key
+	make optimize
+	make migrate
