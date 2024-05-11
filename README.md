@@ -13,7 +13,6 @@
 
 Technologies used in the project:
 
-| ------------------------------------- |
 | [PHP 8](https://www.php.net/)    |
 | [Laravel 11](https://laravel.com/)    |
 | [MYSQL](https://www.mysql.com/)    |
@@ -22,10 +21,13 @@ Technologies used in the project:
 ### Setup
 
 - You must have [Docker](https://www.docker.com/) installed on your machine
-- At the root of the project:
-  - Run `cp .env.example .env` to copy the environment variables to the .env .
-  - Run `make up` to create the image and upload the container.
-  - Run `make generate-key` to generate app key.
+- Setup commands to run the project:
+  - Run to copy the environment variables to the .env .
+    `cp .env.example .env`
+  - Run  to create the image and upload the container.
+    `make up`
+  - Run to generate app key.
+    `make generate-key`
 
 ## Developer
 
