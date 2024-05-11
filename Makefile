@@ -4,8 +4,7 @@ up:
 down:
 	docker-compose down
 
-install:
-	docker-compose exec app composer install
+generate-key:
 	docker-compose exec app php artisan key:generate
 
 optimize:
