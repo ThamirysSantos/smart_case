@@ -2,12 +2,13 @@
 
 namespace App\Infrastructure\Persistence\Models;
 
+use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class PaymentMethodModel extends Model
 {
-    use HasFactory;
+    use HasFactory, Sluggable;
 
     protected $table = 'payment_method';
 
@@ -15,4 +16,13 @@ class PaymentMethodModel extends Model
         'name',
         'slug',
     ];
+
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => 'name'
+            ]
+        ];
+    }
 }
