@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Infrastructure\Persistence\Repositories;
+namespace App\Infrastructure\Persistence\Repositories;
 
-use Domain\DTOs\Merchant;
-use Domain\Interfases\MerchantI;
-use Infrastructure\Persistence\Models\MerchantModel;
+use App\Domain\Dtos\Merchant;
+use App\Domain\Contracts\MerchantI;
+use App\Infrastructure\Persistence\Models\MerchantModel;
 use Error;
 
 class MerchantRepository implements MerchantI

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Infrastructure\Persistence\Repositories;
+namespace App\Infrastructure\Persistence\Repositories;
 
-use Domain\DTOs\PaymentMethod;
-use Domain\Interfases\PaymentMethodI;
-use Infrastructure\Persistence\Models\PaymentMethodModel;
+use App\Domain\Dtos\PaymentMethod;
+use App\Domain\Contracts\PaymentMethodI;
+use App\Infrastructure\Persistence\Models\PaymentMethodModel;
 use Error;
 
 class PaymentMethodRepository implements PaymentMethodI

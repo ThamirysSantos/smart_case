@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Domain\Interfases;
+namespace App\Domain\Contracts;
 
-use Domain\DTOS\PaymentMethod;
+use App\Domain\Dtos\PaymentMethod;
 
 interface PaymentMethodI
 {

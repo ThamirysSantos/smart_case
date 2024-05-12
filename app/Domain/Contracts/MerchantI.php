@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Domain\Interfases;
+namespace App\Domain\Contracts;
 
-use Domain\DTOS\Merchant;
+use App\Domain\Dtos\Merchant;
 
 interface MerchantI
 {

@@ -2,37 +2,31 @@
 
 declare(strict_types=1);
 
-namespace Infrastructure\Providers;
+namespace App\Infrastructure\Providers;
 
-use Domain\Interfases\MerchantI;
-use Domain\Interfases\PaymentI;
-use Domain\Interfases\PaymentMethodI;
-use Infrastructure\Persistence\Repositories\MerchantRepository;
-use Infrastructure\Persistence\Repositories\PaymentRepository;
-use Infrastructure\Persistence\Repositories\PaymentMethodRepository;
+use App\Domain\Contracts\MerchantI;
+use App\Domain\Contracts\PaymentI;
+use App\Domain\Contracts\PaymentMethodI;
+use App\Infrastructure\Persistence\Repositories\MerchantRepository;
+use App\Infrastructure\Persistence\Repositories\PaymentRepository;
+use App\Infrastructure\Persistence\Repositories\PaymentMethodRepository;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     */
     public function register(): void
     {
         $this->registerRepositories();
     }
 
-    /**
-     * Bootstrap any application services.
-     */
     public function boot(): void
     {
         Factory::guessFactoryNamesUsing(function (string $modelName) {
             return 'Database\\Factories\\' . class_basename($modelName) . 'Factory';
         });
         Factory::guessModelNamesUsing(function($string){
-            return 'Infrastructure\\Persistence\\Models\\'  . str_replace('Factory', '', class_basename($string));
+            return 'App\\Infrastructure\\Persistence\\Models\\'  . str_replace('Factory', '', class_basename($string));
         });
     }
 
