@@ -23,6 +23,14 @@ class MerchantModel extends Authenticatable
         'amount',
     ];
 
+    protected $visible = [
+        'name',
+        'email',
+        'amount',
+        'created_at',
+        'updated_at'
+    ];
+
     protected $hidden = [
         'password',
         'remember_token',
