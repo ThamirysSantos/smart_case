@@ -21,7 +21,7 @@ class PaymentMethodModel extends Model
     {
         return [
             'slug' => [
-                'source' => 'name'
+                'source' => ['name', 'id']
             ]
         ];
     }
