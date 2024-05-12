@@ -10,7 +10,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('payment', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id');
             $table->string('name_client');
             $table->string('cpf', 11);
             $table->string('description');
