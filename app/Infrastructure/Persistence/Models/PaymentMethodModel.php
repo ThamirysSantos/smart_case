@@ -13,8 +13,6 @@ class PaymentMethodModel extends Model
 
     protected $fillable = [
         'name',
-        'email',
-        'password',
-        'amount',
+        'slug',
     ];
 }
