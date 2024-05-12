@@ -19,6 +19,9 @@ migrate-rollback:
 migrate:
 	docker-compose exec app php artisan migrate
 
+seed:
+	docker-compose exec app php artisan db:seed
+
 setup:
 	make up
 	make generate-key
