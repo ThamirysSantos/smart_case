@@ -7,6 +7,9 @@ down:
 generate-key:
 	docker-compose exec app php artisan key:generate
 
+bash:
+	docker-compose exec app bash
+
 optimize:
 	docker-compose exec app php artisan optimize
 	docker-compose exec app php artisan route:clear
@@ -26,5 +29,5 @@ seed:
 setup:
 	make up
 	make generate-key
-	make optimize
 	make migrate
+	make seed
