@@ -9,6 +9,6 @@ class MerchantSeeder extends Seeder
 {
     public function run(): void
     {
-        MerchantModel::factory(1)->create();
+        MerchantModel::factory(2)->create();
     }
 }

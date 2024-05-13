@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Http\Requests;
 
+use App\Infrastructure\Http\Requests\ValidationRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -18,14 +19,9 @@ class CreatePaymentRequest extends FormRequest
         'paidAt',
     ];
 
-    // public function __construct(
-    //     private ValidationRequest $validationRequest
-    // ) {
-    // }
-
-    public function authorize()
-    {
-        return true;
+    public function __construct(
+        private ValidationRequest $validationRequest
+    ) {
     }
 
     public function rules()

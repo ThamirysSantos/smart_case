@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Http\Requests;
 
+use App\Infrastructure\Http\Requests\ValidationRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -16,23 +17,18 @@ class RegisterRequest extends FormRequest
         'amount'
     ];
 
-    // public function __construct(
-    //     private ValidationRequest $validationRequest
-    // ) {
-    // }
-
-    public function authorize()
-    {
-        return true;
+    public function __construct(
+        private ValidationRequest $validationRequest
+    ) {
     }
 
     public function rules()
     {
         return [
             'name' => 'required|string',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:merchant,email',
             'password' => 'required',
-            'merchant' => 'required|integer'
+            'amount' => 'required|integer'
         ];
     }
 
@@ -50,7 +46,8 @@ class RegisterRequest extends FormRequest
         $this->sanitizeJsonRequest();
     }
 
-    protected function failedValidation(Validator $validator)
+    public function failedValidation(Validator $validator)
+
     {
         $this->validationRequest->handleFailedValidation($validator);
     }

@@ -4,51 +4,59 @@ declare(strict_types=1);
 
 namespace App\UseCase;
 
+USE aPP\Domain\Contracts\MerchantI;
 use App\Domain\Contracts\PaymentI;
 use App\Domain\Dtos\Payment\Payment;
+use App\Util\PaymentProvider;
+use App\Util\RateCalculator;
+use Illuminate\Support\Carbon;
 
 class CreatePaymentUseCase
 {
-    const PIX_FEE_RATE = 0.015; // 1.5%
-    const BOLETO_FEE_RATE = 0.02; // 2%
-    const TRANSFER_FEE_RATE = 0.04; // 4%
-
     public function __construct(
-        private PaymentI $merchantI,
-        private Payment $merchant,
+        private MerchantI $merchantI,
+        private PaymentI $paymentI,
+        private PaymentProvider $paymentProvider,
+        private RateCalculator $rateCalculator,
     ){}
 
     public function execute(Payment $payment): array
     {   
-        // chamar o provider e atualizar o status
+        $paymentStatus = $this->getPaymentStatus();
+        $payment->setStatus($paymentStatus);
 
-        // Se o pagamento retornar sucesso, adicionar saldo ao usuário.
-        $newPayment = $this->merchantI->create($payment);
+        if($paymentStatus == 'PAID') {
+            $payment->setPaidAt(Carbon::now()->toDateTimeString());
+        }
+
+        $newPayment = $this->paymentI->create($payment);
+        $amountWithRateCalculated = $this
+            ->caculateMerchantAmount($newPayment);
+
+        $this->merchantI->updateAmount($newPayment->merchantId, $amountWithRateCalculated);
 
         return $newPayment->toArray();
     }
 
-    private function rateCalculator(int $amount, string $paymentMethod)
+    private function getPaymentStatus(): string
     {
-        switch ($paymentMethod) {
-            case 'PIX':
-                return $amount * self::PIX_FEE_RATE;
-            case 'BOLETO':
-                return $amount * self::BOLETO_FEE_RATE;
-            case 'BANK_TRANSFER':
-                return $amount * self::TRANSFER_FEE_RATE;
-            default:
-                return 0;
+        $processPayment = $this->paymentProvider->execute();
+
+        if ($processPayment){
+            return 'PAID';
         }
+
+        return 'FAILED';
     }
 
-    private function paymentProvider(): bool
+    private function caculateMerchantAmount(Payment $newPayment): int
     {
-        $success = mt_rand(1, 100) <= 70;
+        $rateCalculated = $this
+            ->rateCalculator->execute($newPayment->amount, $newPayment->paymentMethod);
+        $merchantAmount = $this->merchantI->getAmount($newPayment->merchantId);
 
-        if ($success) {
-            return true;
-        }
-        return false;
+        $newAmount = ($merchantAmount + $newPayment->amount) - $rateCalculated;
+
+        return $newAmount;
     }
 }

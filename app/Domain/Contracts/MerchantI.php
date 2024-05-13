@@ -12,4 +12,8 @@ interface MerchantI
     public function create(Register $register): Merchant;
     
     public function login(string $email): Merchant;
+
+    public function getAmount(int $merchantId): int;
+
+    public function updateAmount(int $merchantId, int $amount): void;
 }

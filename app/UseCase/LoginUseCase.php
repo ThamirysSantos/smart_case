@@ -7,7 +7,6 @@ namespace App\UseCase;
 use App\Domain\Contracts\MerchantI;
 use App\Domain\Dtos\Auth\Login;
 use Error;
-use Illuminate\Support\Facades\Auth;
 
 class LoginUseCase
 {
@@ -18,7 +17,7 @@ class LoginUseCase
 
     public function execute(Login $credentials): array
     {
-        if (Auth::attempt($credentials->toArray())) {
+        if (auth()->attempt($credentials->toArray(), false)) {
             $merchant = $this->merchantI->login($credentials->email);
             return $merchant->toArray();
         } else {

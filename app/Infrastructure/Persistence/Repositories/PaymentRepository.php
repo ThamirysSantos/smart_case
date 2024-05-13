@@ -7,7 +7,9 @@ namespace App\Infrastructure\Persistence\Repositories;
 use App\Domain\Dtos\Payment\Payment;
 use App\Domain\Contracts\PaymentI;
 use App\Infrastructure\Persistence\Models\PaymentModel;
-use Error;
+use App\Util\CodeErrors;
+use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class PaymentRepository implements PaymentI
 {
@@ -19,19 +21,32 @@ class PaymentRepository implements PaymentI
     public function getAll(int $merchantId): array
     {
         try {
-            $payments = $this->model->where(['merchant_id' => $merchantId]);
+            $payments = $this->model->paginate()
+                ->where(['merchant_id' => $merchantId]);
             return new $payments->toArray();
         } catch (\Throwable $e) {
-            throw new Error($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
     public function get(string $id, int $merchantId): Payment
     {
         try {
-            $payment = $this->model->where(['id'=> $id, 'merchant_id' => $merchantId]);
-        } catch (\Throwable $e) {
-            throw new Error($e->getMessage());
+            $payment = $this->model->where(
+                ['id'=> $id, 'merchant_id' => $merchantId]
+            );
+
+            if(empty($payment)){
+                throw new ModelNotFoundException(
+                    "Payment Not found by id $id", 
+                    CodeErrors::NOT_FOUND
+                );
+            }
+        } catch (\Throwable) {
+            throw new Exception(
+                'Error while fetching payment',
+                CodeErrors::INTERNAL_SERVER_ERROR
+            );
         }
 
         return new Payment(...$payment);
@@ -61,8 +76,11 @@ class PaymentRepository implements PaymentI
                 $newPayment->paid_at
             );
 
-        } catch (\Throwable $e) {
-            throw new Error($e->getMessage());
+        } catch (\Throwable) {
+            throw new Exception(
+                'Error while creating a new payment',
+                CodeErrors::INTERNAL_SERVER_ERROR
+            );
         }
     }
 }

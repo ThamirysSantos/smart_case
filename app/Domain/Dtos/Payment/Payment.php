@@ -22,14 +22,14 @@ class Payment
         string $description = '',
         int $amount = 0,
         string $paymentMethod = '',
-        string $paidAt = '',
+        ?string $paidAt = '',
     ){
         $this->merchantId = $merchantId;
         $this->nameClient = $nameClient;
         $this->cpf = $cpf;
         $this->description = $description;
         $this->amount = $amount;
-        $this->status = 'PAID';
+        $this->status = 'PENDING';
         $this->paymentMethod = $paymentMethod;
         $this->paidAt = $paidAt;
     }
@@ -46,5 +46,15 @@ class Payment
             'paymentMethod' => $this->paymentMethod,
             'paidAt' =>$this->paidAt,
         ];
+    }
+
+    public function setPaidAt(string $paidAt): void
+    {
+        $this->paidAt = $paidAt;
+    }
+
+    public function setStatus(string $status): void
+    {
+        $this->status = $status;
     }
 }    
