@@ -61,8 +61,8 @@ class PaymentController extends Controller
     public function store(CreatePaymentRequest $request)
     {
         try {
-            $merchant = auth()->user();
-        
+            $merchant = auth()->guard('api')->user();
+            DD($merchant);
             $payment = new Payment(
                 $merchant->id,
                 $request->get('nameClient'),

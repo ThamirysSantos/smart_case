@@ -17,7 +17,7 @@ class LoginUseCase
 
     public function execute(Login $credentials): array
     {
-        if (auth()->attempt($credentials->toArray(), false)) {
+        if (auth()->attempt($credentials->toArray())) {
             $merchant = $this->merchantI->login($credentials->email);
             return $merchant->toArray();
         } else {

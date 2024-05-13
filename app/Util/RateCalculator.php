@@ -6,14 +6,9 @@ namespace App\Util;
 
 class RateCalculator
 {
-    const PIX_FEE_RATE = 0.015; // 1.5%
-    const BOLETO_FEE_RATE = 0.02; // 2%
-    const TRANSFER_FEE_RATE = 0.04; // 4%
-
-    public function __construct(
-        private int $amount,
-        private string $paymentMethod,
-    ){}
+    const PIX_FEE_RATE = 0.015;
+    const BOLETO_FEE_RATE = 0.02;
+    const BANK_TRANSFER_FEE_RATE = 0.04;
 
     public function execute(int $amount, string $paymentMethod): int
     {
@@ -23,7 +18,7 @@ class RateCalculator
             case 'BOLETO':
                 return $amount * self::BOLETO_FEE_RATE;
             case 'BANK_TRANSFER':
-                return $amount * self::TRANSFER_FEE_RATE;
+                return $amount * self::BANK_TRANSFER_FEE_RATE;
             default:
                 return 0;
         }

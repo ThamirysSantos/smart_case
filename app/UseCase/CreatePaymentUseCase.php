@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\UseCase;
 
-USE aPP\Domain\Contracts\MerchantI;
+USE App\Domain\Contracts\MerchantI;
 use App\Domain\Contracts\PaymentI;
 use App\Domain\Dtos\Payment\Payment;
 use App\Util\PaymentProvider;

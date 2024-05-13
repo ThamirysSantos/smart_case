@@ -29,7 +29,7 @@ services:
       - ./docker-compose/mysql/my.cnf:/etc/mysql/my.cnf
       - ./docker-compose/mysql/init:/docker-entrypoint-initdb.d
     ports:
-      - 3306:3306
+      - 3308:3306
     networks:
       - smart_app
 

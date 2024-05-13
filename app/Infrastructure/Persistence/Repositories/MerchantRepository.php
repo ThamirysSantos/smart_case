@@ -101,7 +101,6 @@ class MerchantRepository implements MerchantI
             $merchantData->email,
             $merchantData->password,
             $merchantData->amount,
-            $merchantData->email_verified_at->format('Y-m-d'),
             $merchantData->created_at->format('Y-m-d'),
             $merchantData->updated_at->format('Y-m-d'), 
             $token,

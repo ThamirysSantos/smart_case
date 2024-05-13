@@ -12,6 +12,7 @@ optimize:
 	docker-compose exec app php artisan route:clear
 	docker-compose exec app php artisan config:cache
 	docker-compose exec app php artisan  config:clear
+	docker-compose exec app composer dump-autoload
 
 migrate-reset:
 	docker-compose exec app php artisan migrate:reset

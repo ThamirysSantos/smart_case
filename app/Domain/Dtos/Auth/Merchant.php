@@ -11,8 +11,7 @@ class Merchant
         public string $name, 
         public string $email, 
         public ?string $password, 
-        public int $amount, 
-        public ?string $emailVerifiedAt, 
+        public int $amount,
         public string $createdAt, 
         public ?string $updatedAt,
         public ?string $token,
@@ -22,7 +21,6 @@ class Merchant
         $this->email = $email;
         $this->password = $password;
         $this->amount = $amount;
-        $this->emailVerifiedAt = $emailVerifiedAt;
         $this->createdAt = $createdAt;
         $this->updatedAt = $updatedAt;
         $this->token = $token;
@@ -34,7 +32,6 @@ class Merchant
             'name' => $this->name,
             'email' => $this->email,
             'amount' => $this->amount,
-            'emailVerifiedAt' => $this->emailVerifiedAt,
             'createdAt' => $this->createdAt,
             'updatedAt' => $this->updatedAt,
             'token' => $this->token,
