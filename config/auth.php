@@ -14,8 +14,8 @@ return [
     */
 
     'defaults' => [
-        'guard' => env('AUTH_GUARD', 'web'),
-        'passwords' => env('AUTH_PASSWORD_BROKER', 'merchant'),
+        'guard' => 'api',
+        'passwords' => 'users',
     ],
 
     /*
@@ -40,6 +40,10 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'api' => [
+            'driver' => 'jwt',
+            'provider' => 'users',
+        ],
     ],
 
     /*
@@ -60,7 +64,7 @@ return [
     */
 
     'providers' => [
-        'merchant' => [
+        'users' => [
             'driver' => 'eloquent',
             'model' => env('AUTH_MODEL', App\Infrastructure\Persistence\Models\MerchantModel::class),
         ],
@@ -92,7 +96,7 @@ return [
 
     'passwords' => [
         'users' => [
-            'provider' => 'merchant',
+            'provider' => 'users',
             'table' => env('AUTH_PASSWORD_RESET_TOKEN_TABLE', 'password_reset_tokens'),
             'expire' => 60,
             'throttle' => 60,

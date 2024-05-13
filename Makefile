@@ -13,8 +13,8 @@ optimize:
 	docker-compose exec app php artisan config:cache
 	docker-compose exec app php artisan  config:clear
 
-migrate-rollback:
-	docker-compose exec app php artisan migrate:rollback
+migrate-reset:
+	docker-compose exec app php artisan migrate:reset
 
 migrate:
 	docker-compose exec app php artisan migrate

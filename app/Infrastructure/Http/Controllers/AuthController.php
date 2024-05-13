@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Http\Controllers;
 
-use App\Domain\Dtos\Register;
-use App\Domain\Dtos\Login;
+use App\Domain\Dtos\Auth\Register;
+use App\Domain\Dtos\Auth\Login;
 use App\UseCase\RegisterUseCase;
 use App\UseCase\LoginUseCase;
 use App\Infrastructure\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Error;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
@@ -39,18 +39,24 @@ class AuthController extends Controller
             $request->get('email'),
             $request->get('password'),
         );
-            
+
         $response = $this->loginUseCase->execute($credentials);
         return response()->json($response, 200);
+        // $credentials = request(['email', 'password']);
+  
+        // if (! $token = auth()->guard('api')->attempt($credentials)) {
+        //     return response()->json(['error' => 'Unauthorized'], 401);
+        // }
+  
+        // return $this->respondWithToken($token);
     }
 
-    // public function profile()
+    // protected function respondWithToken($token)
     // {
-
-    // }
-
-    // public function logout()
-    // {
-
+    //     return response()->json([
+    //         'access_token' => $token,
+    //         'token_type' => 'bearer',
+    //         'expires_in' => auth()->guard('api')->factory()->getTTL() * 60,
+    //     ]);
     // }
 }

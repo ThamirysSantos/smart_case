@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Dtos;
+namespace App\Domain\Dtos\Auth;
 
 class Register
 {
@@ -28,8 +28,8 @@ class Register
         ];
     }
 
-    public function setPasswordHashed(string $hash)
+    public function setEncryptedPassword(string $encryp)
     {
-        $this->password = $hash;
+        $this->password = $encryp;
     }
 }

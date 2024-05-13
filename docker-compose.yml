@@ -24,14 +24,12 @@ services:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       MYSQL_PASSWORD: ${DB_PASSWORD}
       MYSQL_USER: ${DB_USERNAME}
-      SERVICE_TAGS: dev
-      SERVICE_NAME: mysql
     volumes:
       - dbdata:/var/lib/mysql
       - ./docker-compose/mysql/my.cnf:/etc/mysql/my.cnf
       - ./docker-compose/mysql/init:/docker-entrypoint-initdb.d
     ports:
-      - 3307:3306
+      - 3306:3306
     networks:
       - smart_app
 

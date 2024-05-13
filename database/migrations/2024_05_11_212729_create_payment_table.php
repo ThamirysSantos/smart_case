@@ -10,7 +10,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('payment', function (Blueprint $table) {
-            $table->uuid('id');
+            $table->uuid('id')->primary();
+            $table->unsignedBigInteger('merchant_id');
             $table->string('name_client');
             $table->string('cpf', 11);
             $table->string('description');
@@ -19,6 +20,8 @@ return new class extends Migration
             $table->string('payment_method');
             $table->dateTime('paid_at');
             $table->timestamps();
+
+            $table->foreign('merchant_id')->references('id')->on('merchant');
         });
     }
 

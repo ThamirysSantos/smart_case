@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Persistence\Repositories;
 
-use App\Domain\Dtos\Merchant;
-use App\Domain\Dtos\Register;
+use App\Domain\Dtos\Auth\Merchant;
+use App\Domain\Dtos\Auth\Register;
 use App\Domain\Contracts\MerchantI;
 use App\Infrastructure\Persistence\Models\MerchantModel;
 use Error;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Laravel\Sanctum\NewAccessToken;
 
 class MerchantRepository implements MerchantI
 {
@@ -22,7 +21,7 @@ class MerchantRepository implements MerchantI
     /**
      * @throws ModelNotFoundException
      */
-    public function getbyEmail(string $email): Merchant
+    public function login(string $email): Merchant
     {
         try {
             $merchantFetched = $this->model->where(['email' => $email])->first();
