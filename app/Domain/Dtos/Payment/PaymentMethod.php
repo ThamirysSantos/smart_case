@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Payment\Dtos;
+namespace App\Domain\Dtos\Payment;
 
 class PaymentMethod
 {

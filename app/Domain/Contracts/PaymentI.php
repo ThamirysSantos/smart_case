@@ -8,9 +8,9 @@ use App\Domain\Dtos\Payment\Payment;
 
 interface PaymentI
 {
-    public function getAll(): array;
+    public function getAll(int $merchantId): array;
 
-    public function get(int $id): Payment;
+    public function get(string $id, int $merchantId): Payment;
 
     public function create(Payment $payment): Payment;
 }

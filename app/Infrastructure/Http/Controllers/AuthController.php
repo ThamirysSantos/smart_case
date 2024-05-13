@@ -6,12 +6,11 @@ namespace App\Infrastructure\Http\Controllers;
 
 use App\Domain\Dtos\Auth\Register;
 use App\Domain\Dtos\Auth\Login;
+use App\Infrastructure\Http\Requests\LoginRequest;
+use App\Infrastructure\Http\Requests\RegisterRequest;
 use App\UseCase\RegisterUseCase;
 use App\UseCase\LoginUseCase;
 use App\Infrastructure\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
@@ -20,7 +19,7 @@ class AuthController extends Controller
         private LoginUseCase $loginUseCase,
     ){}
 
-    public function register(Request $request)
+    public function register(RegisterRequest $request)
     {
         $merchant = new Register(
             $request->get('name'),
@@ -28,12 +27,12 @@ class AuthController extends Controller
             $request->get('password'),
             $request->amount
         );
-            
+
         $newMerchant = $this->registerUseCase->execute($merchant);
         return response()->json($newMerchant, 201);
     }
 
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
         $credentials = new Login(
             $request->get('email'),

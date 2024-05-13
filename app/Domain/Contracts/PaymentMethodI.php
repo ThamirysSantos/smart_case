@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Contracts;
 
-use App\Domain\Dtos\PaymentMethod;
+use App\Domain\Dtos\Payment\PaymentMethod;
 
 interface PaymentMethodI
 {

@@ -7,7 +7,7 @@ namespace App\Infrastructure\Http\Controllers;
 use App\Domain\Dtos\Payment\Payment;
 use App\UseCase\CreatePaymentUseCase;
 use App\Infrastructure\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Infrastructure\Http\Requests\CreatePaymentRequest;
 
 class PaymentController extends Controller
 {
@@ -15,7 +15,7 @@ class PaymentController extends Controller
         private CreatePaymentUseCase $createPaymentUseCase,
     ){}
 
-    public function store(Request $request)
+    public function store(CreatePaymentRequest $request)
     {
         $merchant = auth()->user();
 

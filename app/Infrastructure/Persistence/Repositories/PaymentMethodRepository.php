@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Persistence\Repositories;
 
-use App\Domain\Dtos\PaymentMethod;
+use App\Domain\Dtos\Payment\PaymentMethod;
 use App\Domain\Contracts\PaymentMethodI;
 use App\Infrastructure\Persistence\Models\PaymentMethodModel;
 use Error;

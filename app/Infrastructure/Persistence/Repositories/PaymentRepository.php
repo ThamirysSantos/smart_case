@@ -16,20 +16,20 @@ class PaymentRepository implements PaymentI
     ) {
     }
 
-    public function getAll(): array
+    public function getAll(int $merchantId): array
     {
         try {
-            $payments = $this->model->findAll();
+            $payments = $this->model->where(['merchant_id' => $merchantId]);
             return new $payments->toArray();
         } catch (\Throwable $e) {
             throw new Error($e->getMessage());
         }
     }
 
-    public function get(int $id): Payment
+    public function get(string $id, int $merchantId): Payment
     {
         try {
-            $payment = $this->model->findOrFail($id);
+            $payment = $this->model->where(['id'=> $id, 'merchant_id' => $merchantId]);
         } catch (\Throwable $e) {
             throw new Error($e->getMessage());
         }
