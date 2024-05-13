@@ -8,7 +8,6 @@ use App\Domain\Dtos\Auth\Merchant;
 use App\Domain\Dtos\Auth\Register;
 use App\Domain\Contracts\MerchantI;
 use App\Infrastructure\Persistence\Models\MerchantModel;
-use App\Util\CodeErrors;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -24,17 +23,14 @@ class MerchantRepository implements MerchantI
         try {
             $merchantFetched = $this->model->where(['email' => $email])->first();
             if(empty($merchantFetched)) {
-                throw new ModelNotFoundException(
-                    "Merchant Not found by email", 
-                    CodeErrors::NOT_FOUND
-                );
+                throw new ModelNotFoundException("Merchant Not found by email");
             } else {
                 $token = $merchantFetched->createToken('secret')->plainTextToken;
 
                 return $this->formatData($merchantFetched, $token);
             }
         } catch (\Throwable) {
-            throw new Exception('Error processing login', CodeErrors::NOT_FOUND);
+            throw new Exception('Error processing login');
         }
     }
 
@@ -43,10 +39,7 @@ class MerchantRepository implements MerchantI
         try {
             $newMerchant = $this->model->create($register->toArray());
         } catch (\Throwable) {
-            throw new Exception(
-                'Error while creating new Merchant', 
-                CodeErrors::INTERNAL_SERVER_ERROR
-            );
+            throw new Exception('Error while creating new Merchant');
         }
 
         return $this->formatData($newMerchant, null);
@@ -58,16 +51,10 @@ class MerchantRepository implements MerchantI
             $merchant = $this->model->where(['id' => $merchantId]);
             
             if(empty($merchant)) {
-                throw new ModelNotFoundException(
-                    "Merchant Not found", 
-                    CodeErrors::NOT_FOUND
-                );
+                throw new ModelNotFoundException("Merchant Not found");
             }
         } catch (\Throwable) {
-            throw new Exception(
-                'Error while fetching merchant amount', 
-                CodeErrors::INTERNAL_SERVER_ERROR
-            );
+            throw new Exception('Error while fetching merchant amount');
         }
 
         return $merchant->amount;
@@ -78,18 +65,12 @@ class MerchantRepository implements MerchantI
         try {
             $merchant = $this->model->where(['id' => $merchantId]);
             if(empty($merchant)) {
-                throw new ModelNotFoundException(
-                    "Merchant Not found", 
-                    CodeErrors::NOT_FOUND
-                );
+                throw new ModelNotFoundException("Merchant Not found");
             } else {
                 $merchant->update(['amount' => $amount]);
             }
         } catch (\Throwable) {
-            throw new Exception(
-                'Error while updating merchant maount', 
-                CodeErrors::INTERNAL_SERVER_ERROR
-            );
+            throw new Exception('Error while updating merchant maount');
         }
     }
 

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domain\Dtos\Payment;
 
+use App\Util\StatusEnum;
+
 class Payment
 {
     public ?int $merchantId;
@@ -29,7 +31,7 @@ class Payment
         $this->cpf = $cpf;
         $this->description = $description;
         $this->amount = $amount;
-        $this->status = 'PENDING';
+        $this->status = StatusEnum::PENDING;
         $this->paymentMethod = $paymentMethod;
         $this->paidAt = $paidAt;
     }

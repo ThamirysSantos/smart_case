@@ -4,14 +4,18 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Http\Controllers;
 
-use App\Domain\Dtos\Auth\Register;
 use App\Domain\Dtos\Auth\Login;
-use App\Infrastructure\Http\Requests\LoginRequest;
+use App\Domain\Dtos\Auth\Register;
 use App\Infrastructure\Http\Requests\RegisterRequest;
 use App\UseCase\RegisterUseCase;
 use App\UseCase\LoginUseCase;
 use App\Infrastructure\Http\Controllers\Controller;
+use App\Infrastructure\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
+use OpenApi\Annotations as OA;
+use PHPOpenSourceSaver\JWTAuth\Exceptions\JWTException;
 
 class AuthController extends Controller
 {
@@ -19,92 +23,71 @@ class AuthController extends Controller
         private RegisterUseCase $registerUseCase,
         private LoginUseCase $loginUseCase,
     ){}
-
-    public function register(RegisterRequest $request)
+    
+    public function register(RegisterRequest $request): JsonResponse
     {
-        $merchant = new Register(
-            $request->get('name'),
-            $request->get('email'),
-            $request->get('password'),
-            $request->amount
-        );
-
-        $newMerchant = $this->registerUseCase->execute($merchant);
-        return response()->json($newMerchant, 201);
-    }
-
-       /**
-     * Get a JWT via given credentials.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function login()
-    {
-        $credentials = request(['email', 'password']);
-        dd(auth()->attempt($credentials));
-        if (! $token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+        try {
+            $merchant = new Register(
+                $request->get('name'),
+                $request->get('email'),
+                $request->get('password'),
+                $request->amount
+            );
+    
+            $newMerchant = $this->registerUseCase->execute($merchant);
+            return response()->json($newMerchant, Response::HTTP_CREATED);
+        } catch (\Throwable $e) {
+            $this->sendError($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
-  
-        return $this->respondWithToken($token);
     }
-  
-    /**
-     * Get the authenticated User.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function me()
+
+    public function login(LoginRequest $request): JsonResponse
+    {
+        try {
+            $credentials = new Login(
+                $request->get('email'),
+                $request->get('password'),
+            );
+            
+            $token = $this->loginUseCase->execute($credentials);
+
+            return $this->respondWithToken($token);
+        } catch(JWTException $e) {
+            return $this->sendResponse($e->getLine(), Response::HTTP_UNAUTHORIZED);
+        } catch(\Throwable $e) {
+            return $this->sendError($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    public function me(): JsonResponse
     {
         return response()->json(auth()->user());
     }
-  
-    /**
-     * Log the user out (Invalidate the token).
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function logout()
+
+    public function logout(): JsonResponse
     {
         auth()->logout();
   
-        return response()->json(['message' => 'Successfully logged out']);
+        return $this->sendResponse(
+            ['message' => 'Successfully logged out'],
+            Response::HTTP_OK
+        );
     }
-  
-    /**
-     * Refresh a token.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function refresh()
+    
+    public function refresh(): JsonResponse
     {
         return $this->respondWithToken(Auth::Refresh());
     }
-  
-    /**
-     * Get the token array structure.
-     *
-     * @param  string $token
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    protected function respondWithToken($token)
+
+    protected function respondWithToken($token): JsonResponse
     {
-        return response()->json([
-            'access_token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => Auth::factory()->getTTL() * 60
-        ]);
+        return $this->sendResponse(
+            [
+                'access_token' => $token,
+                'token_type' => 'bearer',
+                'expires_in' => Auth::factory()->getTTL() * 60
+            ],
+            Response::HTTP_OK
+        );
     }
-
-    // public function login(LoginRequest $request)
-    // {
-    //     $credentials = new Login(
-    //         $request->get('email'),
-    //         $request->get('password'),
-    //     );
-
-    //     $response = $this->loginUseCase->execute($credentials);
-    //     return response()->json($response, 200);
-    // }
 }

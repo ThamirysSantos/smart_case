@@ -6,7 +6,7 @@ namespace App\UseCase;
 
 use App\Domain\Contracts\MerchantI;
 use App\Domain\Dtos\Auth\Login;
-use Error;
+use PHPOpenSourceSaver\JWTAuth\Exceptions\JWTException;
 
 class LoginUseCase
 {
@@ -15,13 +15,13 @@ class LoginUseCase
         private Login $merchant,
     ){}
 
-    public function execute(Login $credentials): array
+    public function execute(Login $credentials): string
     {
         if (auth()->attempt($credentials->toArray())) {
             $merchant = $this->merchantI->login($credentials->email);
-            return $merchant->toArray();
+            return $merchant->token;
         } else {
-            throw new Error('Invalid credentials');
+            throw new JWTException('Invalid credentials');
         }
     }
 }

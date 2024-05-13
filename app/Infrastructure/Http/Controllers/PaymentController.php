@@ -11,6 +11,7 @@ use App\UseCase\GetPaymentUseCase;
 use App\UseCase\ListPaymentsUseCase;
 use App\Infrastructure\Http\Controllers\Controller;
 use App\Infrastructure\Http\Requests\CreatePaymentRequest;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Response;
 
 class PaymentController extends Controller
@@ -50,6 +51,8 @@ class PaymentController extends Controller
             $paymentFetched = $this->getPaymentUseCase->execute($payment);
 
             return $this->sendResponse($paymentFetched, Response::HTTP_OK);
+        } catch (ModelNotFoundException $e){
+            return $this->sendError($e->getMessage(), Response::HTTP_NOT_FOUND);
         } catch (\Throwable $e) {
             return $this->sendError(
                 $e->getMessage(), 
@@ -75,6 +78,8 @@ class PaymentController extends Controller
     
             $newPayment = $this->createPaymentUseCase->execute($payment);
             return $this->sendResponse($newPayment, Response::HTTP_CREATED);
+        } catch (ModelNotFoundException $e){
+            return $this->sendError($e->getMessage(), Response::HTTP_NOT_FOUND);
         } catch (\Throwable $e) {
             return $this->sendError(
                 $e->getMessage(), 

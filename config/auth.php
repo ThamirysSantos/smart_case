@@ -25,11 +25,6 @@ return [
             'driver' => 'eloquent',
             'model' => App\Infrastructure\Persistence\Models\MerchantModel::class,
         ],
-
-        'users' => [
-            'driver' => 'database',
-            'table' => 'merchant',
-        ],
     ],
 
     'passwords' => [
