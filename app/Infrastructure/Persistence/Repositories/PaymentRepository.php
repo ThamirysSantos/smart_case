@@ -37,16 +37,10 @@ class PaymentRepository implements PaymentI
             );
 
             if(empty($payment)){
-                throw new ModelNotFoundException(
-                    "Payment Not found by id $id", 
-                    CodeErrors::NOT_FOUND
-                );
+                throw new ModelNotFoundException("Payment Not found by id $id");
             }
         } catch (\Throwable) {
-            throw new Exception(
-                'Error while fetching payment',
-                CodeErrors::INTERNAL_SERVER_ERROR
-            );
+            throw new Exception('Error while fetching payment');
         }
 
         return new Payment(...$payment);
@@ -77,10 +71,7 @@ class PaymentRepository implements PaymentI
             );
 
         } catch (\Throwable) {
-            throw new Exception(
-                'Error while creating a new payment',
-                CodeErrors::INTERNAL_SERVER_ERROR
-            );
+            throw new Exception('Error while creating a new payment');
         }
     }
 }

@@ -33,6 +33,14 @@ Technologies used in the project:
       ```
       make setup
       ```
+    - Run  to generate JWT token secret at .env file.
+      ```
+      make jwt-generate
+      ```
+    - Run to generate API documentation
+      ```
+        make swagger-generate
+      ```
 - #### Sedders
   - when running seeder:
     - the payment_method table will be populated with the methods ['PIX',   'BOLETO', 'BANK_TRANSFER']

@@ -26,6 +26,12 @@ migrate:
 seed:
 	docker-compose exec app php artisan db:seed
 
+jwt-generate:
+	docker-compose exec app php artisan l5-swagger:generate
+
+swagger-generate:
+	docker-compose exec app php artisan l5-swagger:generate
+
 setup:
 	make up
 	make generate-key
