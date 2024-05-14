@@ -72,7 +72,7 @@ class PaymentController extends Controller
                 $request->get('cpf'),
                 $request->get('description'),
                 $request->get('amount'),
-                $request->get('paymentMethod'),
+                $request->get('payment_method'),
                 null,
             );
     
