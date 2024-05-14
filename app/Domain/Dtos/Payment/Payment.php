@@ -13,7 +13,7 @@ class Payment
     public ?Carbon $paid_at;
 
     public function __construct(
-        public int $merchantId = 0,
+        public int $merchant_id = 0,
         public string $name = '',
         public string $cpf = '',
         public string $description = '',
@@ -27,14 +27,14 @@ class Payment
     public function toArray()
     {
         return [
-            'merchantId' => $this->merchantId,
+            'merchant_id' => $this->merchant_id,
             'name' => $this->name,
             'cpf' => $this->cpf,
             'description' => $this->description,
             'amount' => $this->amount,
             'status' => $this->status,
             'payment_method' => $this->payment_method,
-            'paidAt' =>$this->paid_at,
+            'paid_at' =>$this->paid_at,
         ];
     }
 

@@ -32,7 +32,7 @@ class CreatePaymentUseCase
             ->caculateMerchantAmount($newPayment);
 
             $this->merchantI->updateAmount(
-                $newPayment->merchantId,
+                $newPayment->merchant_id,
                 $amountWithRateCalculated
             );
         }
@@ -49,8 +49,8 @@ class CreatePaymentUseCase
     private function caculateMerchantAmount(Payment $newPayment): float
     {
         $rateCalculated = $this
-            ->rateCalculator->execute($newPayment->amount, $newPayment->paymentMethod);
-        $merchantAmount = $this->merchantI->getAmount($newPayment->merchantId);
+            ->rateCalculator->execute($newPayment->amount, $newPayment->payment_method);
+        $merchantAmount = $this->merchantI->getAmount($newPayment->merchant_id);
 
         $newAmount = ($merchantAmount + $newPayment->amount) - $rateCalculated;
 
