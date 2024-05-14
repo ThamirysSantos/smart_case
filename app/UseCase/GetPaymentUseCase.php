@@ -11,11 +11,14 @@ class GetPaymentUseCase
 {
     public function __construct(
         private PaymentI $paymentI,
-    ){}
+    ){
+    }
 
     public function execute(GetPayment $paymentToFetch): array
-    {   
-        $paymentDetails = $this->paymentI->get($paymentToFetch->paymentId, $paymentToFetch->merchantId);
+    {
+        $paymentDetails = $this->paymentI
+            ->get($paymentToFetch->paymentId, $paymentToFetch->merchantId);
+        
         return $paymentDetails;
     }
 }

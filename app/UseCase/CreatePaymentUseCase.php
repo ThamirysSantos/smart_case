@@ -17,7 +17,8 @@ class CreatePaymentUseCase
         private PaymentI $paymentI,
         private PaymentProvider $paymentProvider,
         private RateCalculator $rateCalculator,
-    ){}
+    ){
+    }
 
     public function execute(Payment $payment): array
     {
@@ -36,7 +37,6 @@ class CreatePaymentUseCase
                 $amountWithRateCalculated
             );
         }
-       
 
         return $newPayment->toArray();
     }

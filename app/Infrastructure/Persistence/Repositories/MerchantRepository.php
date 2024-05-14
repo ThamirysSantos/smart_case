@@ -27,7 +27,7 @@ class MerchantRepository implements MerchantI
     public function getAmount(int $merchantId): float
     {
         $merchant = $this->model->find($merchantId);
-        
+
         if(empty($merchant)) {
             throw new ModelNotFoundException("Merchant Not found");
         }

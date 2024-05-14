@@ -12,7 +12,8 @@ class RegisterUseCase
     public function __construct(
         private MerchantI $merchantI,
         private Register $merchant,
-    ){}
+    ){
+    }
 
     public function execute(Register $register): array
     {
@@ -20,9 +21,8 @@ class RegisterUseCase
         $register->setEncryptedPassword($encryptedPassword);
 
         $newMerchant = $this->merchantI->create($register);
-        
 
-        return $newMerchant->toArray(); 
+        return $newMerchant->toArray();
     }
 
     private function encryptPassword(string $password): string

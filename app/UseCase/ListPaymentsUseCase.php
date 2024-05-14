@@ -11,10 +11,11 @@ class ListPaymentsUseCase
 {
     public function __construct(
         private PaymentI $paymentI,
-    ){}
+    ){
+    }
 
     public function execute(int $merchantId): LengthAwarePaginator
-    {   
+    {
         $payments = $this->paymentI->getAll($merchantId);
 
         return $payments;

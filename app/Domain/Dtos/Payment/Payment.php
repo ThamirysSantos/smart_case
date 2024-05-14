@@ -48,4 +48,5 @@ class Payment
     {
         $this->status = StatusEnum::FAILED;
     }
-}    
+}
+

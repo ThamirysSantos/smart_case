@@ -20,7 +20,7 @@ use Illuminate\Foundation\Http\FormRequest;
  */
 class CreatePaymentRequest extends FormRequest
 {
-        /**
+    /**
      * @OA\Property(
      *     title="Name",
      *     description="Client name",

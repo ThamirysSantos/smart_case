@@ -23,7 +23,7 @@ class AuthController extends Controller
         private RegisterUseCase $registerUseCase,
         private LoginUseCase $loginUseCase,
     ){}
-    
+
     /**
      * @OA\Post(
      *     path="/api/register",
@@ -52,11 +52,11 @@ class AuthController extends Controller
                 $request->get('password'),
                 $request->get('amount', 0),
             );
-    
+
             $newMerchant = $this->registerUseCase->execute($merchant);
             return response()->json($newMerchant, Response::HTTP_CREATED);
         } catch (\Throwable $e) {
-            $this->sendError($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+            return response()->json($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -85,17 +85,17 @@ class AuthController extends Controller
                 $request->get('email'),
                 $request->get('password'),
             );
-            
+
             $token = $this->loginUseCase->execute($credentials);
 
             return $this->respondWithToken($token);
         } catch(JWTException $e) {
-            return $this->sendError($e->getMessage(), Response::HTTP_UNAUTHORIZED);
+            return response()->json($e->getMessage(), Response::HTTP_UNAUTHORIZED);
         } catch(\Throwable $e) {
-            return $this->sendError($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+            return response()->json($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
-    
+
     /**
      * @OA\Post(
      *     path="/api/me",
@@ -124,13 +124,13 @@ class AuthController extends Controller
     public function logout(): JsonResponse
     {
         auth()->logout();
-  
-        return $this->sendResponse(
+
+        return response()->json(
             ['message' => 'Successfully logged out'],
             Response::HTTP_OK
         );
     }
-    
+
     /**
      * @OA\Post(
      *     path="/api/refresh",

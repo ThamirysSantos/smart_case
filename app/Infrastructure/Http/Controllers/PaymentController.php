@@ -41,9 +41,9 @@ class PaymentController extends Controller
             $pagination = $this->listPaymentsUseCase
                 ->execute($merchant->id);
 
-            return $this->sendResponse($pagination, Response::HTTP_OK);
+            return response()->json($pagination, Response::HTTP_OK);
         } catch (\Throwable $e) {
-            return $this->sendError(
+            return response()->json(
                 $e->getMessage(), 
                 Response::HTTP_INTERNAL_SERVER_ERROR
             );
@@ -65,7 +65,7 @@ class PaymentController extends Controller
     {
         try {
             $merchant = auth()->user();
-            
+
             if (!$merchant) {
                 throw new UnauthorizedException('Unauthorized');
             }
@@ -77,13 +77,13 @@ class PaymentController extends Controller
 
             $paymentFetched = $this->getPaymentUseCase->execute($payment);
 
-            return $this->sendResponse($paymentFetched, Response::HTTP_OK);
+            return response()->json($paymentFetched, Response::HTTP_OK);
         } catch (UnauthorizedException $e){
-            return $this->sendError($e->getMessage(), Response::HTTP_UNAUTHORIZED);
+            return response()->json($e->getMessage(), Response::HTTP_UNAUTHORIZED);
         } catch (ModelNotFoundException $e){
-            return $this->sendError($e->getMessage(), Response::HTTP_NOT_FOUND);
+            return response()->json($e->getMessage(), Response::HTTP_NOT_FOUND);
         } catch (\Throwable $e) {
-            return $this->sendError(
+            return response()->json(
                 $e->getMessage(), 
                 Response::HTTP_INTERNAL_SERVER_ERROR
             );
@@ -108,14 +108,13 @@ class PaymentController extends Controller
      *     @OA\Response(response="201", description="Payment registered successfully"),
      *     @OA\Response(response="422",description="Validation errors"),
      *     @OA\Response(response="401", description="Unauthorized")
-     *     
      * )
      */
     public function store(CreatePaymentRequest $request)
     {
         try {
             $merchant = auth()->guard('api')->user();
-            
+
             if (!$merchant) {
                 throw new UnauthorizedException('Unauthorized');
             }
@@ -130,13 +129,13 @@ class PaymentController extends Controller
             );
 
             $newPayment = $this->createPaymentUseCase->execute($payment);
-            return $this->sendResponse($newPayment, Response::HTTP_CREATED);
+            return response()->json($newPayment, Response::HTTP_CREATED);
         } catch (UnauthorizedException $e){
-            return $this->sendError($e->getMessage(), Response::HTTP_UNAUTHORIZED);
+            return response()->json($e->getMessage(), Response::HTTP_UNAUTHORIZED);
         } catch (ModelNotFoundException $e){
-            return $this->sendError($e->getMessage(), Response::HTTP_NOT_FOUND);
+            return response()->json($e->getMessage(), Response::HTTP_NOT_FOUND);
         } catch (\Throwable $e) {
-            return $this->sendError(
+            return response()->json(
                 $e->getMessage(), 
                 Response::HTTP_INTERNAL_SERVER_ERROR
             );

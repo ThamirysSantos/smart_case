@@ -8,11 +8,6 @@ class PaymentProvider
 {
     public function execute(): bool
     {
-        $success = mt_rand(1, 100) <= 70;
-
-        if ($success) {
-            return true;
-        }
-        return false;
+        return mt_rand(1, 100) <= 70;
     }
 }

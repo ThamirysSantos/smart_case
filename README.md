@@ -7,6 +7,7 @@
   - [Setup](#Setup)
   - [Archtecture](#Archtecture)
   - [Makefile](#Makefile)
+  - [Swagger](#Swagger)
 - [Developer](#Developer)
 
 ## Development
@@ -72,6 +73,8 @@ Technologies used in the project:
   - `make migrate` to run migrations.
   - `make migrate-reset` to reset migrations.
   - `make seed` to run sedders.
+### Swagger
+- Api documentation can be acessed on [http://localhost:8005/api/documentation#/](http://localhost:8005/api/documentation#/)
 
 ### Archtecture
   - This project was developed based on clean architecture.

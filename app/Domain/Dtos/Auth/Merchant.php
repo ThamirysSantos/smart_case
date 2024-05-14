@@ -7,10 +7,10 @@ namespace App\Domain\Dtos\Auth;
 class Merchant
 {
     public function __construct(
-        public int $id, 
-        public string $name, 
-        public string $email, 
-        public ?string $password, 
+        public int $id,
+        public string $name,
+        public string $email,
+        public ?string $password,
         public int $amount
     ) {}
 

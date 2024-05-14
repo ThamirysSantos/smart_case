@@ -2,8 +2,6 @@
 
 namespace App\Infrastructure\Persistence\Models;
 
-// use App\Infrastructure\Persistence\Traits\UuidTrait;
-
 use App\Util\StatusEnum;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

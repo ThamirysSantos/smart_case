@@ -13,13 +13,15 @@ class LoginUseCase
     public function __construct(
         private MerchantI $merchantI,
         private Login $merchant,
-    ){}
+    ){
+    }
 
     public function execute(Login $credentials): string
     {
         if (!$token = auth()->attempt($credentials->toArray())) {
             throw new JWTException('Invalid credentials');
-        } 
+        }
+
         return $token;
     }
 }
