@@ -75,7 +75,7 @@ class PaymentController extends Controller
                 $request->get('payment_method'),
                 null,
             );
-    
+
             $newPayment = $this->createPaymentUseCase->execute($payment);
             return $this->sendResponse($newPayment, Response::HTTP_CREATED);
         } catch (ModelNotFoundException $e){

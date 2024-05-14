@@ -10,7 +10,6 @@ use App\Domain\Contracts\MerchantI;
 use App\Infrastructure\Persistence\Models\MerchantModel;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\Facades\Log;
 
 class MerchantRepository implements MerchantI
 {
@@ -67,8 +66,8 @@ class MerchantRepository implements MerchantI
             $merchantData->email,
             $merchantData->password,
             $merchantData->amount,
-            $merchantData->created_at->format('Y-m-d'),
-            $merchantData->updated_at->format('Y-m-d'), 
+            $merchantData->created_at,
+            $merchantData->updated_at, 
             $token,
         );
     }

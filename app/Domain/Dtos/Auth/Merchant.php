@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domain\Dtos\Auth;
 
+use Carbon\Carbon;
+
 class Merchant
 {
     public function __construct(
@@ -12,8 +14,8 @@ class Merchant
         public string $email, 
         public ?string $password, 
         public int $amount,
-        public string $createdAt, 
-        public ?string $updatedAt,
+        public Carbon $created_at, 
+        public ?Carbon $updated_at,
         public ?string $token,
     ) {}
 
@@ -23,8 +25,8 @@ class Merchant
             'name' => $this->name,
             'email' => $this->email,
             'amount' => $this->amount,
-            'createdAt' => $this->createdAt,
-            'updatedAt' => $this->updatedAt,
+            'createdAt' => $this->created_at,
+            'updatedAt' => $this->updated_at,
             'token' => $this->token,
         ];
     }

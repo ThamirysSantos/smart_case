@@ -18,7 +18,7 @@ return new class extends Migration
             $table->float('amount');
             $table->enum('status', StatusEnum::toArray());
             $table->string('payment_method');
-            $table->dateTime('paid_at');
+            $table->dateTime('paid_at')->nullable();
             $table->timestamps();
 
             $table->foreign('merchant_id')->references('id')->on('merchant');

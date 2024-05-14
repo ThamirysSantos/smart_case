@@ -19,8 +19,7 @@ class LoginUseCase
     {
         if (!$token = auth()->attempt($credentials->toArray())) {
             throw new JWTException('Invalid credentials');
-        } else {
-            return $token;
-        }
+        } 
+        return $token;
     }
 }
