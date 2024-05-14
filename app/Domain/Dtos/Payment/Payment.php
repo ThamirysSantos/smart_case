@@ -17,7 +17,7 @@ class Payment
         public string $name = '',
         public string $cpf = '',
         public string $description = '',
-        public float $amount = 0.00,
+        public float $amount = 0,
         public string $payment_method = '',
     ){
         $this->status = StatusEnum::PENDING;

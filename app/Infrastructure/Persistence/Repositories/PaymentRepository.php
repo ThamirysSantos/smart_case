@@ -33,7 +33,7 @@ class PaymentRepository implements PaymentI
         try {
             $payment = $this->model->where(
                 ['id'=> $id, 'merchant_id' => $merchantId]
-            );
+            )->first();
 
             if(empty($payment)){
                 throw new ModelNotFoundException("Payment Not found by id $id");
