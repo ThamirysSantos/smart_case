@@ -17,7 +17,7 @@ class Payment
         public string $name = '',
         public string $cpf = '',
         public string $description = '',
-        public int $amount = 0,
+        public float $amount = 0.00,
         public string $paymentMethod = '',
     ){
         $this->merchantId = $merchantId;
