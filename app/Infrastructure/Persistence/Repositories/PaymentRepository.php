@@ -20,20 +20,15 @@ class PaymentRepository implements PaymentI
 
     public function getAll(int $merchantId): LengthAwarePaginator
     {
-        try {
-            $payments = $this->model
+        $payments = $this->model
                 ->where(['merchant_id' => $merchantId])
                 ->paginate(5);
             return  $payments;
-        } catch (\Throwable $e) {
-            throw new Exception($e->getMessage());
-        }
     }
 
     public function get(string $id, int $merchantId): array
     {
-        try {
-            $payment = $this->model->where(
+        $payment = $this->model->where(
                 ['id'=> $id, 'merchant_id' => $merchantId]
             )->first();
 
@@ -42,20 +37,12 @@ class PaymentRepository implements PaymentI
             }
 
             return $payment->toArray();
-        } catch (\Throwable) {
-            throw new Exception('Error while fetching payment');
-        }
     }
 
     public function create(Payment $payment): Payment
     {
-        try {
-            $this->model->create($payment->toArray());
-            
-            return $payment;
-
-        } catch (\Throwable) {
-            throw new Exception('Error while creating a new payment');
-        }
+        $this->model->create($payment->toArray());
+        
+        return $payment;
     }
 }

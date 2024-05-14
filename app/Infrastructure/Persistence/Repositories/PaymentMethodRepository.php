@@ -7,7 +7,6 @@ namespace App\Infrastructure\Persistence\Repositories;
 use App\Domain\Dtos\Payment\PaymentMethod;
 use App\Domain\Contracts\PaymentMethodI;
 use App\Infrastructure\Persistence\Models\PaymentMethodModel;
-use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class PaymentMethodRepository implements PaymentMethodI
@@ -19,13 +18,9 @@ class PaymentMethodRepository implements PaymentMethodI
 
     public function get(int $id): PaymentMethod
     {
-        try {
-            $paymentMethod = $this->model->where(['id', $id]);
-            if(empty($paymentMethod)){
-                throw new ModelNotFoundException("Payment Method Not found");
-            }
-        } catch (\Throwable) {
-            throw new Exception('Error while fetching payment method');
+        $paymentMethod = $this->model->where(['id', $id]);
+        if(empty($paymentMethod)){
+            throw new ModelNotFoundException("Payment Method Not found");
         }
 
         return new PaymentMethod(...$paymentMethod);
@@ -33,11 +28,6 @@ class PaymentMethodRepository implements PaymentMethodI
 
     public function create(PaymentMethod $paymentMethod): void
     {
-        try {
-            dd($paymentMethod);
-            $this->model->create($paymentMethod);
-        } catch (\Throwable $e) {
-            throw new Exception('Error while creating new payment method');
-        }
+        $this->model->create($paymentMethod);
     }
 }
