@@ -60,11 +60,16 @@ class CreatePaymentRequest extends FormRequest
      */
     private function sanitizeJsonRequest(): void
     {
+        $cpf = $this->request->get('cpf');
+        
+        $this->removeMask($cpf);
         $this->replace($this->only(self::REQUEST_ATTRIBUTES));
     }
 
-    private function removeMask(string $cpf): string
+    private function removeMask(string $cpf): void
     {
-        return  preg_replace('/[^0-9]/', '', $cpf);
+        $this->request->add([
+            'cpf' => preg_replace('/[^0-9]/', '', $cpf)
+        ]);
     }
 }
