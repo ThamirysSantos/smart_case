@@ -11,7 +11,7 @@ use Illuminate\Foundation\Http\FormRequest;
 class CreatePaymentRequest extends FormRequest
 {
     private const REQUEST_ATTRIBUTES = [
-        'nameClient',
+        'name',
         'cpf',
         'description',
         'amount',
@@ -27,7 +27,7 @@ class CreatePaymentRequest extends FormRequest
     public function rules()
     {
         return [
-            'nameClient' => 'required|string',
+            'name' => 'required|string',
             'cpf' => 'required|cpf',
             'description' => 'required|string',
             'amount' => 'required|integer|gt:0',

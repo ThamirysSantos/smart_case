@@ -15,16 +15,7 @@ class Merchant
         public string $createdAt, 
         public ?string $updatedAt,
         public ?string $token,
-    ){
-        $this->id = $id;
-        $this->name = $name;
-        $this->email = $email;
-        $this->password = $password;
-        $this->amount = $amount;
-        $this->createdAt = $createdAt;
-        $this->updatedAt = $updatedAt;
-        $this->token = $token;
-    }
+    ) {}
 
     public function toArray() {
         return [
