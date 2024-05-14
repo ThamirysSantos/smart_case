@@ -211,7 +211,7 @@
     "components": {
         "schemas": {
             "CreatePaymentRequest": {
-                "title": "Register Request",
+                "title": "Create Payment Request",
                 "description": "request body",
                 "properties": {
                     "name": {
@@ -247,7 +247,7 @@
                 },
                 "type": "object",
                 "xml": {
-                    "name": "Register"
+                    "name": "Create Payment"
                 }
             },
             "LoginRequest": {
