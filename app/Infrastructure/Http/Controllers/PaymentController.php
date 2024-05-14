@@ -68,7 +68,7 @@ class PaymentController extends Controller
 
             $payment = new Payment(
                 $merchant->id,
-                $request->get('name_client'),
+                $request->get('name'),
                 $request->get('cpf'),
                 $request->get('description'),
                 $request->get('amount'),
