@@ -11,10 +11,10 @@ use Illuminate\Foundation\Http\FormRequest;
 
 /**
  * @OA\Schema(
- *     title="Register Request",
+ *     title="Create Payment Request",
  *     description="request body",
  *     @OA\Xml(
- *         name="Register"
+ *         name="Create Payment"
  *     )
  * )
  */
