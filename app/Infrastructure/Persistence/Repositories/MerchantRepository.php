@@ -44,7 +44,7 @@ class MerchantRepository implements MerchantI
         return $merchant->amount;
     }
 
-    public function updateAmount(int $merchantId, int $amount): void
+    public function updateAmount(int $merchantId, float $amount): void
     {
         try {
             $merchant = $this->model->where(['id' => $merchantId]);

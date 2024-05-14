@@ -13,5 +13,5 @@ interface MerchantI
 
     public function getAmount(int $merchantId): int;
 
-    public function updateAmount(int $merchantId, int $amount): void;
+    public function updateAmount(int $merchantId, float $amount): void;
 }
