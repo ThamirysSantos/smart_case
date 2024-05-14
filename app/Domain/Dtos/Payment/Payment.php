@@ -9,7 +9,7 @@ use Carbon\Carbon;
 
 class Payment
 {
-    public string $status;
+    public StatusEnum $status;
     public ?Carbon $paid_at;
 
     public function __construct(
