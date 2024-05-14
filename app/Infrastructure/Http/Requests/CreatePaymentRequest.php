@@ -31,7 +31,7 @@ class CreatePaymentRequest extends FormRequest
             'cpf' => 'required|cpf',
             'description' => 'required|string',
             'amount' => 'required|integer|gt:0',
-            'paymentMethod' => 'required|exists:payment_method,slug',
+            'payment_method' => 'required|exists:payment_method,slug',
         ];
     }
 
@@ -60,6 +60,12 @@ class CreatePaymentRequest extends FormRequest
      */
     private function sanitizeJsonRequest(): void
     {
+        $cpf = $this->get('cpf');
         $this->replace($this->only(self::REQUEST_ATTRIBUTES));
+    }
+
+    private function removeMask(string $cpf): string
+    {
+        return  preg_replace('/[^0-9]/', '', $cpf);
     }
 }

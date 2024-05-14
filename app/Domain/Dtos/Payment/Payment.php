@@ -18,15 +18,9 @@ class Payment
         public string $cpf = '',
         public string $description = '',
         public float $amount = 0.00,
-        public string $paymentMethod = '',
+        public string $payment_method = '',
     ){
-        $this->merchantId = $merchantId;
-        $this->name = $name;
-        $this->cpf = $cpf;
-        $this->description = $description;
-        $this->amount = $amount;
         $this->status = StatusEnum::PENDING;
-        $this->paymentMethod = $paymentMethod;
         $this->paid_at = null;
     }
 
@@ -39,7 +33,7 @@ class Payment
             'description' => $this->description,
             'amount' => $this->amount,
             'status' => $this->status,
-            'paymentMethod' => $this->paymentMethod,
+            'payment_method' => $this->payment_method,
             'paidAt' =>$this->paid_at,
         ];
     }
