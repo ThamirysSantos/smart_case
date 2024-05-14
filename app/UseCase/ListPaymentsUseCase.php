@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\UseCase;
 
 use App\Domain\Contracts\PaymentI;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class ListPaymentsUseCase
 {
@@ -12,7 +13,7 @@ class ListPaymentsUseCase
         private PaymentI $paymentI,
     ){}
 
-    public function execute(int $merchantId): array
+    public function execute(int $merchantId): LengthAwarePaginator
     {   
         $payments = $this->paymentI->getAll($merchantId);
 

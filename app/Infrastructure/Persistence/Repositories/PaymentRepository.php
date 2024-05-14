@@ -8,6 +8,7 @@ use App\Domain\Dtos\Payment\Payment;
 use App\Domain\Contracts\PaymentI;
 use App\Infrastructure\Persistence\Models\PaymentModel;
 use Exception;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class PaymentRepository implements PaymentI
@@ -17,12 +18,13 @@ class PaymentRepository implements PaymentI
     ) {
     }
 
-    public function getAll(int $merchantId): array
+    public function getAll(int $merchantId): LengthAwarePaginator
     {
         try {
-            $payments = $this->model->paginate()
-                ->where(['merchant_id' => $merchantId]);
-            return new $payments;
+            $payments = $this->model
+                ->where(['merchant_id' => $merchantId])
+                ->paginate(5);
+            return  $payments;
         } catch (\Throwable $e) {
             throw new Exception($e->getMessage());
         }
