@@ -16,9 +16,10 @@ class GetPaymentUseCase
 
     public function execute(GetPayment $paymentToFetch): array
     {
-        $paymentDetails = $this->paymentI
-            ->get($paymentToFetch->paymentId, $paymentToFetch->merchantId);
-        
-        return $paymentDetails;
+        return $this->paymentI
+            ->get(
+                $paymentToFetch->paymentId,
+                $paymentToFetch->merchantId
+            );
     }
 }

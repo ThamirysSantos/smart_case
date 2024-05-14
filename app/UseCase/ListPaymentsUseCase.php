@@ -16,8 +16,6 @@ class ListPaymentsUseCase
 
     public function execute(int $merchantId): LengthAwarePaginator
     {
-        $payments = $this->paymentI->getAll($merchantId);
-
-        return $payments;
+        return $this->paymentI->getAll($merchantId);
     }
 }

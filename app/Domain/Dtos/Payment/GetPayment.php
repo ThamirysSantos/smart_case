@@ -9,5 +9,6 @@ class GetPayment
     public function __construct(
         public int $merchantId = 0,
         public string $paymentId = '',
-    ){}
+    ){
+    }
 }    

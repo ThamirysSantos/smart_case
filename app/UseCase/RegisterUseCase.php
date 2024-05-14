@@ -20,9 +20,7 @@ class RegisterUseCase
         $encryptedPassword = $this->encryptPassword($register->password);
         $register->setEncryptedPassword($encryptedPassword);
 
-        $newMerchant = $this->merchantI->create($register);
-
-        return $newMerchant->toArray();
+        return $this->merchantI->create($register)->toArray();
     }
 
     private function encryptPassword(string $password): string
