@@ -13,9 +13,9 @@ class RateCalculator
     public function execute(float $amount, string $paymentMethod): float
     {
         return $amount * match ($paymentMethod) {
-            'PIX' => self::PIX_FEE_RATE,
-            'BOLETO' => self::BOLETO_FEE_RATE,
-            'BANK_TRANSFER' => self::BANK_TRANSFER_FEE_RATE,
+            'pix' => self::PIX_FEE_RATE,
+            'boleto' => self::BOLETO_FEE_RATE,
+            'bank-transfer' => self::BANK_TRANSFER_FEE_RATE,
             default => 0
         };
     }

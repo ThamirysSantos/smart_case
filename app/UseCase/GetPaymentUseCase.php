@@ -17,6 +17,6 @@ class GetPaymentUseCase
     {   
         $paymentDetails = $this->paymentI->get($paymentToFetch->paymentId, $paymentToFetch->merchantId);
 
-        return $paymentDetails->toArray();
+        return $paymentDetails;
     }
 }

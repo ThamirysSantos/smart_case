@@ -47,6 +47,5 @@ class Payment
     public function failed(): void
     {
         $this->status = StatusEnum::FAILED;
-        $this->paid_at = Carbon::now();
     }
 }    

@@ -10,7 +10,7 @@ interface PaymentI
 {
     public function getAll(int $merchantId): array;
 
-    public function get(string $id, int $merchantId): Payment;
+    public function get(string $id, int $merchantId): array;
 
     public function create(Payment $payment): Payment;
 }

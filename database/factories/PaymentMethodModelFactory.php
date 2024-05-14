@@ -9,7 +9,7 @@ class PaymentMethodModelFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->unique()->randomElement(['PIX', 'BOLETO', 'BANK_TRANSFER']),
+            'name' => fake()->unique()->randomElement(['pix', 'boleto', 'bank-transfer']),
         ];
     }
 }

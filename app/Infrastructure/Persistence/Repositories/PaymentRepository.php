@@ -6,9 +6,7 @@ namespace App\Infrastructure\Persistence\Repositories;
 
 use App\Domain\Dtos\Payment\Payment;
 use App\Domain\Contracts\PaymentI;
-use App\Infrastructure\Persistence\Models\MerchantModel;
 use App\Infrastructure\Persistence\Models\PaymentModel;
-use App\Util\CodeErrors;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -30,7 +28,7 @@ class PaymentRepository implements PaymentI
         }
     }
 
-    public function get(string $id, int $merchantId): Payment
+    public function get(string $id, int $merchantId): array
     {
         try {
             $payment = $this->model->where(
@@ -40,11 +38,11 @@ class PaymentRepository implements PaymentI
             if(empty($payment)){
                 throw new ModelNotFoundException("Payment Not found by id $id");
             }
+
+            return $payment->toArray();
         } catch (\Throwable) {
             throw new Exception('Error while fetching payment');
         }
-
-        return new Payment(...$payment);
     }
 
     public function create(Payment $payment): Payment

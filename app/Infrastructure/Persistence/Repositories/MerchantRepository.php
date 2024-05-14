@@ -29,25 +29,24 @@ class MerchantRepository implements MerchantI
         return $this->formatData($newMerchant, null);
     }
 
-    public function getAmount(int $merchantId): int
+    public function getAmount(int $merchantId): float
     {
         try {
-            $merchant = $this->model->where(['id' => $merchantId]);
+            $merchant = $this->model->find($merchantId);
             
             if(empty($merchant)) {
                 throw new ModelNotFoundException("Merchant Not found");
             }
+            return $merchant->amount;
         } catch (\Throwable) {
             throw new Exception('Error while fetching merchant amount');
         }
-
-        return $merchant->amount;
     }
 
     public function updateAmount(int $merchantId, float $amount): void
     {
         try {
-            $merchant = $this->model->where(['id' => $merchantId]);
+            $merchant = $this->model->find($merchantId);
             if(empty($merchant)) {
                 throw new ModelNotFoundException("Merchant Not found");
             } else {

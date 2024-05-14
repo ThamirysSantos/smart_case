@@ -15,7 +15,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('cpf', 11);
             $table->string('description');
-            $table->float('amount');
+            $table->float('amount', 2);
             $table->enum('status', StatusEnum::toArray());
             $table->string('payment_method');
             $table->dateTime('paid_at')->nullable();
