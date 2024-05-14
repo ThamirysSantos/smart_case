@@ -1,0 +1,30 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Smart Case",
+        "description": "API Documentation",
+        "contact": {
+            "email": "thamirysgoncalves.prog@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://smart-case/api/v1",
+            "description": "Demo API Server"
+        }
+    ],
+    "paths": {
+        "/api/v1": {}
+    },
+    "tags": [
+        {
+            "name": "Authentication",
+            "description": "Authentication endpoints"
+        },
+        {
+            "name": "Payment",
+            "description": "Payment endpoints"
+        }
+    ]
+}

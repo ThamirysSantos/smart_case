@@ -65,7 +65,7 @@ class PaymentController extends Controller
     {
         try {
             $merchant = auth()->guard('api')->user();
-            DD($merchant);
+
             $payment = new Payment(
                 $merchant->id,
                 $request->get('nameClient'),

@@ -18,22 +18,6 @@ class MerchantRepository implements MerchantI
     ) {
     }
 
-    public function login(string $email): Merchant
-    {
-        try {
-            $merchantFetched = $this->model->where(['email' => $email])->first();
-            if(empty($merchantFetched)) {
-                throw new ModelNotFoundException("Merchant Not found by email");
-            } else {
-                $token = $merchantFetched->createToken('secret')->plainTextToken;
-
-                return $this->formatData($merchantFetched, $token);
-            }
-        } catch (\Throwable) {
-            throw new Exception('Error processing login');
-        }
-    }
-
     public function create(Register $register): Merchant
     {
         try {

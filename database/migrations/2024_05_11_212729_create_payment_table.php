@@ -12,7 +12,7 @@ return new class extends Migration
         Schema::create('payment', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->unsignedBigInteger('merchant_id');
-            $table->string('name_client');
+            $table->string('name');
             $table->string('cpf', 11);
             $table->string('description');
             $table->integer('amount');

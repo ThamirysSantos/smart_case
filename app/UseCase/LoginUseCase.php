@@ -17,11 +17,10 @@ class LoginUseCase
 
     public function execute(Login $credentials): string
     {
-        if (auth()->attempt($credentials->toArray())) {
-            $merchant = $this->merchantI->login($credentials->email);
-            return $merchant->token;
-        } else {
+        if (!$token = auth()->attempt($credentials->toArray())) {
             throw new JWTException('Invalid credentials');
+        } else {
+            return $token;
         }
     }
 }

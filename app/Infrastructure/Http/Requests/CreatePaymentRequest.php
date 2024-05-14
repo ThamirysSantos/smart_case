@@ -30,7 +30,7 @@ class CreatePaymentRequest extends FormRequest
             'nameClient' => 'required|string',
             'cpf' => 'required|cpf',
             'description' => 'required|string',
-            'amount' => 'required|integer',
+            'amount' => 'required|integer|gt:0',
             'paymentMethod' => 'required|exists:payment_method,slug',
         ];
     }

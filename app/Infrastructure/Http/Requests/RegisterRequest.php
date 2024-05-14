@@ -28,7 +28,7 @@ class RegisterRequest extends FormRequest
             'name' => 'required|string',
             'email' => 'required|email|unique:merchant,email',
             'password' => 'required',
-            'amount' => 'required|integer'
+            'amount' => 'integer'
         ];
     }
 

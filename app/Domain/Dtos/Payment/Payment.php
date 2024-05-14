@@ -5,58 +5,54 @@ declare(strict_types=1);
 namespace App\Domain\Dtos\Payment;
 
 use App\Util\StatusEnum;
+use Carbon\Carbon;
 
 class Payment
 {
-    public ?int $merchantId;
-    public string $nameClient;
-    public string $cpf;
-    public string $description;
-    public int $amount;
     public string $status;
-    public string $paymentMethod;
-    public string $paidAt;
+    public ?Carbon $paid_at;
 
     public function __construct(
-        int $merchantId = 0,
-        string $nameClient = '',
-        string $cpf = '',
-        string $description = '',
-        int $amount = 0,
-        string $paymentMethod = '',
-        ?string $paidAt = '',
+        public int $merchantId = 0,
+        public string $name = '',
+        public string $cpf = '',
+        public string $description = '',
+        public int $amount = 0,
+        public string $paymentMethod = '',
     ){
         $this->merchantId = $merchantId;
-        $this->nameClient = $nameClient;
+        $this->name = $name;
         $this->cpf = $cpf;
         $this->description = $description;
         $this->amount = $amount;
         $this->status = StatusEnum::PENDING;
         $this->paymentMethod = $paymentMethod;
-        $this->paidAt = $paidAt;
+        $this->paid_at = null;
     }
 
     public function toArray()
     {
         return [
             'merchantId' => $this->merchantId,
-            'nameClient' => $this->nameClient,
+            'name' => $this->name,
             'cpf' => $this->cpf,
             'description' => $this->description,
             'amount' => $this->amount,
             'status' => $this->status,
             'paymentMethod' => $this->paymentMethod,
-            'paidAt' =>$this->paidAt,
+            'paidAt' =>$this->paid_at,
         ];
     }
 
-    public function setPaidAt(string $paidAt): void
+    public function paid(): void
     {
-        $this->paidAt = $paidAt;
+        $this->status = StatusEnum::PAID;
+        $this->paid_at = Carbon::now();
     }
 
-    public function setStatus(string $status): void
+    public function failed(): void
     {
-        $this->status = $status;
+        $this->status = StatusEnum::FAILED;
+        $this->paid_at = Carbon::now();
     }
 }    

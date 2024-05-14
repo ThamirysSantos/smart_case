@@ -9,8 +9,6 @@ use App\Domain\Contracts\PaymentI;
 use App\Domain\Dtos\Payment\Payment;
 use App\Util\PaymentProvider;
 use App\Util\RateCalculator;
-use App\Util\StatusEnum;
-use Illuminate\Support\Carbon;
 
 class CreatePaymentUseCase
 {
@@ -23,31 +21,29 @@ class CreatePaymentUseCase
 
     public function execute(Payment $payment): array
     {
-        $paymentStatus = $this->getPaymentStatus();
-        $payment->setStatus($paymentStatus->value);
+        $paymentProcessed = $this->processPayment();
 
-        if($paymentStatus == StatusEnum::PAID) {
-            $payment->setPaidAt(Carbon::now()->toDateTimeString());
-        }
+        ($paymentProcessed) ? $payment->paid() : $payment->failed();
 
         $newPayment = $this->paymentI->create($payment);
-        $amountWithRateCalculated = $this
+
+        if($paymentProcessed) {
+            $amountWithRateCalculated = $this
             ->caculateMerchantAmount($newPayment);
 
-        $this->merchantI->updateAmount($newPayment->merchantId, $amountWithRateCalculated);
+            $this->merchantI->updateAmount(
+                $newPayment->merchantId,
+                $amountWithRateCalculated
+            );
+        }
+       
 
         return $newPayment->toArray();
     }
 
-    private function getPaymentStatus(): StatusEnum
+    private function processPayment(): bool
     {
-        $processPayment = $this->paymentProvider->execute();
-
-        if ($processPayment){
-            return StatusEnum::PAID;
-        }
-
-        return StatusEnum::FAILED;
+        return $this->paymentProvider->execute();
     }
 
     private function caculateMerchantAmount(Payment $newPayment): int

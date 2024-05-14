@@ -10,8 +10,6 @@ use App\Domain\Dtos\Auth\Merchant;
 interface MerchantI
 {
     public function create(Register $register): Merchant;
-    
-    public function login(string $email): Merchant;
 
     public function getAmount(int $merchantId): int;
 

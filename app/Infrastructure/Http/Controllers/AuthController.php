@@ -23,7 +23,7 @@ class AuthController extends Controller
         private RegisterUseCase $registerUseCase,
         private LoginUseCase $loginUseCase,
     ){}
-    
+
     public function register(RegisterRequest $request): JsonResponse
     {
         try {
@@ -31,7 +31,7 @@ class AuthController extends Controller
                 $request->get('name'),
                 $request->get('email'),
                 $request->get('password'),
-                $request->amount
+                $request->get('amount', 0),
             );
     
             $newMerchant = $this->registerUseCase->execute($merchant);
@@ -53,12 +53,28 @@ class AuthController extends Controller
 
             return $this->respondWithToken($token);
         } catch(JWTException $e) {
-            return $this->sendResponse($e->getLine(), Response::HTTP_UNAUTHORIZED);
+            return $this->sendError($e->getMessage(), Response::HTTP_UNAUTHORIZED);
         } catch(\Throwable $e) {
             return $this->sendError($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
     
+    /**
+     * @OA\GET(
+     *     path="/me",
+     *     tags={"Authentication"},
+     *     description="Get merchant authentication",
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(ref="#/components/schemas/Merchant")
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized"
+     *     )
+     * )
+     */
     public function me(): JsonResponse
     {
         return response()->json(auth()->user());
@@ -76,7 +92,7 @@ class AuthController extends Controller
     
     public function refresh(): JsonResponse
     {
-        return $this->respondWithToken(Auth::Refresh());
+        return $this->respondWithToken(Auth::refresh());
     }
 
     protected function respondWithToken($token): JsonResponse
