@@ -15,7 +15,7 @@ class CreatePaymentRequest extends FormRequest
         'cpf',
         'description',
         'amount',
-        'paymentMethod',
+        'payment_method',
         'paidAt',
     ];
 
@@ -60,7 +60,6 @@ class CreatePaymentRequest extends FormRequest
      */
     private function sanitizeJsonRequest(): void
     {
-        $cpf = $this->get('cpf');
         $this->replace($this->only(self::REQUEST_ATTRIBUTES));
     }
 
