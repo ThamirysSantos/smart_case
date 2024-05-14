@@ -17,11 +17,14 @@ use \Illuminate\Http\JsonResponse;
  *    )
  * )
  * 
- * @OA\PathItem(path="/api/v1")
+ * @OA\PathItem(path="/api")
  * 
- * @OA\Server(
- *     url=L5_SWAGGER_CONST_HOST,
- *     description="Demo API Server"
+ * 
+ * @OA\SecurityScheme(
+ *     type="http",
+ *     securityScheme="bearerAuth",
+ *     scheme="bearer",
+ *     bearerFormat="JWT"
  * )
  * 
  * @OA\Tag(
@@ -29,9 +32,9 @@ use \Illuminate\Http\JsonResponse;
  *     description="Authentication endpoints"
  * ),
  * 
- *  * @OA\Tag(
- *     name="Payment",
- *     description="Payment endpoints"
+ * @OA\Tag(
+ *     name="Payments",
+ *     description="Payments endpoints"
  * ),
  * 
 */

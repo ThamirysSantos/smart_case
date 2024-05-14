@@ -5,11 +5,43 @@ declare(strict_types=1);
 namespace App\Infrastructure\Http\Requests;
 
 use App\Infrastructure\Http\Requests\ValidationRequest;
+use OpenApi\Annotations as OA;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * @OA\Schema(
+ *     title="Login Request",
+ *     description="request body",
+ *     @OA\Xml(
+ *         name="Login"
+ *     )
+ * )
+ */
 class LoginRequest extends FormRequest
 {
+    /**
+     * @OA\Property(
+     *     title="Email",
+     *     description="Merchant email",
+     *     example="Thamirys@gmail.com"
+     * )
+     *
+     * @var string
+     */
+    private $email;
+
+    /**
+     * @OA\Property(
+     *     title="Password",
+     *     description="Merchant password",
+     *     example="secret"
+     * )
+     *
+     * @var string
+     */
+    private $password;
+
     private const REQUEST_ATTRIBUTES = [
         'email',
         'password',

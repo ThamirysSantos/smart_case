@@ -20,6 +20,9 @@ optimize:
 migrate-reset:
 	docker-compose exec app php artisan migrate:reset
 
+migrate-refresh:
+	docker-compose exec app php artisan migrate:refresh
+
 migrate:
 	docker-compose exec app php artisan migrate
 

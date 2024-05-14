@@ -23,7 +23,26 @@ class AuthController extends Controller
         private RegisterUseCase $registerUseCase,
         private LoginUseCase $loginUseCase,
     ){}
-
+    
+    /**
+     * @OA\Post(
+     *     path="/api/register",
+     *     tags={"Authentication"},
+     *     summary="Register a new merchant",
+     *     @OA\RequestBody(
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  type="object",
+     *                  ref="#/components/schemas/RegisterRequest"
+     *              )
+     *          )
+     *     ),
+     *     @OA\Response(response="201", description="Merchant registered successfully"),
+     *     @OA\Response(response="422",description="Validation errors")
+     *     )
+     * )
+     */
     public function register(RegisterRequest $request): JsonResponse
     {
         try {
@@ -41,6 +60,24 @@ class AuthController extends Controller
         }
     }
 
+    /**
+     * @OA\Post(
+     *     path="/api/login",
+     *     tags={"Authentication"},
+     *     summary="Authenticate merchant and generate JWT token",
+     *     @OA\RequestBody(
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  type="object",
+     *                  ref="#/components/schemas/LoginRequest"
+     *              )
+     *          )
+     *     ),
+     *     @OA\Response(response="200", description="Login successful"),
+     *     @OA\Response(response="401", description="Invalid credentials")
+     * )
+     */
     public function login(LoginRequest $request): JsonResponse
     {
         try {
@@ -60,19 +97,13 @@ class AuthController extends Controller
     }
     
     /**
-     * @OA\GET(
-     *     path="/me",
+     * @OA\Post(
+     *     path="/api/me",
      *     tags={"Authentication"},
-     *     description="Get merchant authentication",
-     *     @OA\Response(
-     *         response=200,
-     *         description="Successful operation",
-     *         @OA\JsonContent(ref="#/components/schemas/Merchant")
-     *     ),
-     *     @OA\Response(
-     *         response=401,
-     *         description="Unauthorized"
-     *     )
+     *     summary="Get merchant",
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Response(response="200", description="Merchant fetched successfully"),
+     *     @OA\Response(response="401", description="Unauthorized")
      * )
      */
     public function me(): JsonResponse
@@ -80,6 +111,16 @@ class AuthController extends Controller
         return response()->json(auth()->user());
     }
 
+    /**
+     * @OA\Post(
+     *     path="/api/logout",
+     *     tags={"Authentication"},
+     *     summary="Get merchant",
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Response(response="200", description="Merchant logout successfully"),
+     *     @OA\Response(response="401", description="Unauthorized")
+     * )
+     */
     public function logout(): JsonResponse
     {
         auth()->logout();
@@ -90,6 +131,16 @@ class AuthController extends Controller
         );
     }
     
+    /**
+     * @OA\Post(
+     *     path="/api/refresh",
+     *     tags={"Authentication"},
+     *     summary="Get merchant",
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Response(response="200", description="Token refreshed successfully"),
+     *     @OA\Response(response="401", description="Unauthorized")
+     * )
+     */
     public function refresh(): JsonResponse
     {
         return $this->respondWithToken(Auth::refresh());
@@ -97,13 +148,11 @@ class AuthController extends Controller
 
     protected function respondWithToken($token): JsonResponse
     {
-        return $this->sendResponse(
-            [
-                'access_token' => $token,
-                'token_type' => 'bearer',
-                'expires_in' => Auth::factory()->getTTL() * 60
-            ],
-            Response::HTTP_OK
-        );
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => Auth::factory()->getTTL() * 60
+        ],
+        Response::HTTP_OK);
     }
 }

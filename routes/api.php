@@ -9,7 +9,6 @@ use OpenApi\Annotations as OA;
 
 Route::group([
     'middleware' => 'api',
-    ''
 ], function ($router) {
     Route::post('/register', [AuthController::class, 'register'])->name('register');
     Route::post('/login', [AuthController::class, 'login'])->name('login');

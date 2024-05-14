@@ -8,14 +8,313 @@
         },
         "version": "1.0.0"
     },
-    "servers": [
-        {
-            "url": "http://smart-case/api/v1",
-            "description": "Demo API Server"
-        }
-    ],
     "paths": {
-        "/api/v1": {}
+        "/api": {},
+        "/api/register": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Register a new merchant",
+                "operationId": "cf0092d562a5e0afd7d7d31ac6f5c14f",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RegisterRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Merchant registered successfully"
+                    },
+                    "422": {
+                        "description": "Validation errors"
+                    }
+                }
+            }
+        },
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Authenticate merchant and generate JWT token",
+                "operationId": "cc375a8c1bff284a2c677f5862ad539e",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoginRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Login successful"
+                    },
+                    "401": {
+                        "description": "Invalid credentials"
+                    }
+                }
+            }
+        },
+        "/api/me": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Get merchant",
+                "operationId": "e7ec42b15cfe5d0d9d986cc481e70ee8",
+                "responses": {
+                    "200": {
+                        "description": "Merchant fetched successfully"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/logout": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Get merchant",
+                "operationId": "4f0cca876e8260d42b729237ade9e752",
+                "responses": {
+                    "200": {
+                        "description": "Merchant logout successfully"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/refresh": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Get merchant",
+                "operationId": "18c5ef147fc806796aebf6c1b5dfedfa",
+                "responses": {
+                    "200": {
+                        "description": "Token refreshed successfully"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/payments": {
+            "get": {
+                "tags": [
+                    "Payments"
+                ],
+                "summary": "List merchant payments",
+                "operationId": "23229206874bdb9497f4b461b3c19acd",
+                "responses": {
+                    "200": {
+                        "description": "Payments listed successfully"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Payments"
+                ],
+                "summary": "Create a new payment",
+                "operationId": "a539f68fa4be7cdb84d76d162e8a9637",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreatePaymentRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Payment registered successfully"
+                    },
+                    "422": {
+                        "description": "Validation errors"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/payments/{:id}": {
+            "get": {
+                "tags": [
+                    "Payments"
+                ],
+                "summary": "Get a merchant payment",
+                "operationId": "b2f1f8c662aaaebf5a770e78fe869a01",
+                "responses": {
+                    "200": {
+                        "description": "Payment fetched successfully"
+                    },
+                    "404": {
+                        "description": "Payment Not Found"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "CreatePaymentRequest": {
+                "title": "Register Request",
+                "description": "request body",
+                "properties": {
+                    "name": {
+                        "title": "Name",
+                        "description": "Client name",
+                        "type": "string",
+                        "example": "Client"
+                    },
+                    "cpf": {
+                        "title": "CPF",
+                        "description": "cpf",
+                        "type": "string",
+                        "example": "520.833.190-01"
+                    },
+                    "description": {
+                        "title": "Description",
+                        "description": "Some description",
+                        "type": "string",
+                        "example": "this is a description"
+                    },
+                    "amount": {
+                        "title": "Amount",
+                        "description": "Payment amount",
+                        "type": "string",
+                        "example": 50
+                    },
+                    "payment_method": {
+                        "title": "Payment Method",
+                        "description": "Payment method permited [pix, boleto, bank-transfer]",
+                        "type": "string",
+                        "example": "bank-transfer"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Register"
+                }
+            },
+            "LoginRequest": {
+                "title": "Login Request",
+                "description": "request body",
+                "properties": {
+                    "email": {
+                        "title": "Email",
+                        "description": "Merchant email",
+                        "type": "string",
+                        "example": "Thamirys@gmail.com"
+                    },
+                    "password": {
+                        "title": "Password",
+                        "description": "Merchant password",
+                        "type": "string",
+                        "example": "secret"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Login"
+                }
+            },
+            "RegisterRequest": {
+                "title": "Register Request",
+                "description": "request body",
+                "properties": {
+                    "name": {
+                        "title": "Name",
+                        "description": "Merchant name",
+                        "type": "string",
+                        "example": "Thamirys"
+                    },
+                    "email": {
+                        "title": "Email",
+                        "description": "Merchant email",
+                        "type": "string",
+                        "example": "Thamirys@gmail.com"
+                    },
+                    "password": {
+                        "title": "Password",
+                        "description": "Merchant password",
+                        "type": "string",
+                        "example": "secret"
+                    },
+                    "amount": {
+                        "title": "Amount",
+                        "description": "Merchant amount",
+                        "type": "number",
+                        "format": "float",
+                        "example": 100
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Register"
+                }
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
     },
     "tags": [
         {
@@ -23,8 +322,8 @@
             "description": "Authentication endpoints"
         },
         {
-            "name": "Payment",
-            "description": "Payment endpoints"
+            "name": "Payments",
+            "description": "Payments endpoints"
         }
     ]
 }
