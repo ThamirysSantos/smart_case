@@ -34,8 +34,9 @@ class PaymentMethodRepository implements PaymentMethodI
     public function create(PaymentMethod $paymentMethod): void
     {
         try {
+            dd($paymentMethod);
             $this->model->create($paymentMethod);
-        } catch (\Throwable) {
+        } catch (\Throwable $e) {
             throw new Exception('Error while creating new payment method');
         }
     }

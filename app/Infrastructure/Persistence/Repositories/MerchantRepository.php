@@ -10,6 +10,7 @@ use App\Domain\Contracts\MerchantI;
 use App\Infrastructure\Persistence\Models\MerchantModel;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Log;
 
 class MerchantRepository implements MerchantI
 {
@@ -22,7 +23,7 @@ class MerchantRepository implements MerchantI
     {
         try {
             $newMerchant = $this->model->create($register->toArray());
-        } catch (\Throwable) {
+        } catch (\Throwable $e) {
             throw new Exception('Error while creating new Merchant');
         }
 
