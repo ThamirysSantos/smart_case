@@ -46,7 +46,7 @@ class CreatePaymentUseCase
         return $this->paymentProvider->execute();
     }
 
-    private function caculateMerchantAmount(Payment $newPayment): int
+    private function caculateMerchantAmount(Payment $newPayment): float
     {
         $rateCalculated = $this
             ->rateCalculator->execute($newPayment->amount, $newPayment->paymentMethod);
