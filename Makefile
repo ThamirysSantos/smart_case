@@ -30,7 +30,7 @@ seed:
 	docker-compose exec app php artisan db:seed
 
 jwt-generate:
-	docker-compose exec app php artisan l5-swagger:generate
+	docker-compose exec app php artisan jwt:secret
 
 swagger-generate:
 	docker-compose exec app php artisan l5-swagger:generate

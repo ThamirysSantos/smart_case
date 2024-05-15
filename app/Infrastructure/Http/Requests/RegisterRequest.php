@@ -81,7 +81,8 @@ class RegisterRequest extends FormRequest
         return [
             'name' => 'required|string',
             'email' => 'required|email|unique:merchant,email',
-            'password' => 'required'
+            'password' => 'required',
+            'amount' => 'numeric|gt:0'
         ];
     }
 
@@ -90,6 +91,8 @@ class RegisterRequest extends FormRequest
         return [
             'required' => 'The :attribute is required and must be filled in',
             'string' => ':attribute must be of type string',
+            'numeric' => ':attribute must be of type numeric',
+            'gt' => ':attribute must be grather then 0'
         ];
     }
 
@@ -109,6 +112,14 @@ class RegisterRequest extends FormRequest
      */
     private function sanitizeJsonRequest(): void
     {
+        $amount = $this->request->get('amount');
+
+        if($amount) {
+            $this->request->add([
+                'amount' => (float) $this->request->get('amount')
+            ]);   
+        }
+
         $this->replace($this->only(self::REQUEST_ATTRIBUTES));
     }
 }

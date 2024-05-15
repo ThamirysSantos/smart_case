@@ -11,7 +11,7 @@ class Merchant
         public string $name,
         public string $email,
         public ?string $password,
-        public int $amount
+        public float $amount
     ) {}
 
     public function toArray() {

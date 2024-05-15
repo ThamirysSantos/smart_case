@@ -10,7 +10,7 @@ class Register
         public string $name = '',
         public string $email = '',
         public string $password = '',
-        public int $amount = 0
+        public float $amount = 0
     ) {}
 
     public function toArray() {

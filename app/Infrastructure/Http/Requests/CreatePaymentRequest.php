@@ -60,7 +60,7 @@ class CreatePaymentRequest extends FormRequest
      *     example=50
      * )
      *
-     * @var string
+     * @var float
      */
     private $amount;
 
@@ -94,7 +94,7 @@ class CreatePaymentRequest extends FormRequest
             'name' => 'required|string',
             'cpf' => 'required|cpf',
             'description' => 'required|string',
-            'amount' => 'required|required|regex:/^[0-9]{1,3}(,[0-9]{3})*(\.[0-9]+)*$/|gt:0',
+            'amount' => 'required|numeric|gt:0',
             'payment_method' => 'required|exists:payment_method,slug',
         ];
     }
@@ -104,8 +104,9 @@ class CreatePaymentRequest extends FormRequest
         return [
             'required' => 'The :attribute is required and must be filled in',
             'string' => ':attribute must be of type string',
-            'regex' => ':attribute must be of type float',
             'exists' => ':attribute not found',
+            'numeric' => ':attribute must be of type numeric',
+            'gt' => ':attribute must be grather then 0'
         ];
     }
 
@@ -124,16 +125,14 @@ class CreatePaymentRequest extends FormRequest
      */
     private function sanitizeJsonRequest(): void
     {
-        $cpf = $this->request->get('cpf');
-        
-        $this->removeMask($cpf);
-        $this->replace($this->only(self::REQUEST_ATTRIBUTES));
-    }
-
-    private function removeMask(string $cpf): void
-    {
         $this->request->add([
-            'cpf' => preg_replace('/[^0-9]/', '', $cpf)
+            'amount' => (float) $this->request->get('amount')
         ]);
+
+        $this->request->add([
+            'cpf' => preg_replace('/[^0-9]/', '', $this->request->get('cpf'))
+        ]);
+
+        $this->replace($this->only(self::REQUEST_ATTRIBUTES));
     }
 }
