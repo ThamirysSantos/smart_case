@@ -52,10 +52,16 @@ class PaymentController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/payments/{:id}",
+     *     path="/api/payments/{id}",
      *     tags={"Payments"},
      *     summary="Get a merchant payment",
      *     security={{"bearerAuth":{}}},
+    *      @OA\Parameter(
+     *         name="id",
+     *         description="Payment id",
+     *          in = "path",
+     *         required=true,
+     *     ),
      *     @OA\Response(response="200", description="Payment fetched successfully"),
      *     @OA\Response(response="404", description="Payment Not Found"),
      *     @OA\Response(response="401", description="Unauthorized")

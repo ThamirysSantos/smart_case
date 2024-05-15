@@ -182,13 +182,21 @@
                 ]
             }
         },
-        "/api/payments/{:id}": {
+        "/api/payments/{id}": {
             "get": {
                 "tags": [
                     "Payments"
                 ],
                 "summary": "Get a merchant payment",
-                "operationId": "b2f1f8c662aaaebf5a770e78fe869a01",
+                "operationId": "cc6b560b69bdebd2f13f85584f3118bf",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Payment id",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Payment fetched successfully"
@@ -235,7 +243,8 @@
                     "amount": {
                         "title": "Amount",
                         "description": "Payment amount",
-                        "type": "string",
+                        "type": "number",
+                        "format": "float",
                         "example": 50
                     },
                     "payment_method": {
